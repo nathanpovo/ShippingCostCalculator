@@ -8,6 +8,12 @@
 
   <ItemGroup>
     <PackageReference Include="Microsoft.Web.LibraryManager.Build" Version="2.1.113" />
+    <PackageReference Include="ReactiveUI.Blazor" Version="15.1.1" />
+    <PackageReference Include="ReactiveUI.Fody" Version="15.1.1" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <ProjectReference Include="..\ShippingCostCalculator.Domain\ShippingCostCalculator.Domain.csproj" />
   </ItemGroup>
 
 </Project>
