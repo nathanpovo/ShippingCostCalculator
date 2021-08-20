@@ -1,6 +1,6 @@
 namespace ShippingCostCalculator.Domain.PackageDetailsValidators
 {
-    public class MaltaShipPackageDetailsValidator : IPackageDetailsValidator
+    internal class MaltaShipPackageDetailsValidator : IPackageDetailsValidator
     {
         public bool IsVolumeValid(PackageDimensions packageDimensions)
             => packageDimensions.Volume >= 500;

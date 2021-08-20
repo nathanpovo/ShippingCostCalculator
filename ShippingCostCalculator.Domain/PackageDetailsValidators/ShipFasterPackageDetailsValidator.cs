@@ -1,6 +1,6 @@
 namespace ShippingCostCalculator.Domain.PackageDetailsValidators
 {
-    public class ShipFasterPackageDetailsValidator : IPackageDetailsValidator
+    internal class ShipFasterPackageDetailsValidator : IPackageDetailsValidator
     {
         public bool IsVolumeValid(PackageDimensions packageDimensions)
             => packageDimensions.Volume is > 0 and <= 1700;

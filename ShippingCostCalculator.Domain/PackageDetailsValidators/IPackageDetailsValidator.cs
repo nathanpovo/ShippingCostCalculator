@@ -1,6 +1,6 @@
 namespace ShippingCostCalculator.Domain.PackageDetailsValidators
 {
-    public interface IPackageDetailsValidator
+    internal interface IPackageDetailsValidator
     {
         /// <summary>
         /// Validates the dimensions of the package.

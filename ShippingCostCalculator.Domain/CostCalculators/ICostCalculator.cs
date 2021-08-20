@@ -1,6 +1,6 @@
 namespace ShippingCostCalculator.Domain.CostCalculators
 {
-    public interface ICostCalculator
+    internal interface ICostCalculator
     {
         /// <summary>
         /// Calculates the cost of the shipping based on the dimensions of the package.

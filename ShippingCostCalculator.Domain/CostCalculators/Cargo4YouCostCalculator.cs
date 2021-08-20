@@ -2,7 +2,7 @@ using System;
 
 namespace ShippingCostCalculator.Domain.CostCalculators
 {
-    public class Cargo4YouCostCalculator : ICostCalculator
+    internal class Cargo4YouCostCalculator : ICostCalculator
     {
         public long CalculateCostBasedOnDimensions(PackageDimensions packageDimensions)
             => packageDimensions.Volume switch

@@ -2,7 +2,7 @@ using System;
 
 namespace ShippingCostCalculator.Domain.CostCalculators
 {
-    public class MaltaShipCostCalculator : ICostCalculator
+    internal class MaltaShipCostCalculator : ICostCalculator
     {
         public long CalculateCostBasedOnDimensions(PackageDimensions packageDimensions)
             => packageDimensions.Volume switch
