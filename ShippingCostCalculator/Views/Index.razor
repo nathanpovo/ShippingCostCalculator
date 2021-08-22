@@ -50,8 +50,28 @@
                 <p>Volume: @(ViewModel?.PackageDimensions?.Volume ?? 0) cm<sup>3</sup></p>
             </div>
         </div>
-        <div class="col-12">
-            <button type="submit" class="btn btn-primary">Calculate cost</button>
-        </div>
     </form>
+
+    <table class="table">
+        <thead>
+        <tr>
+            <th scope="col">Courier</th>
+            <th scope="col">Shipping Cost</th>
+        </tr>
+        </thead>
+        <tbody>
+        <tr>
+            <th scope="row">Cargo4You</th>
+            <td>@Cargo4YouCostValue</td>
+        </tr>
+        <tr>
+            <th scope="row">ShipFaster</th>
+            <td>@ShipFasterCostValue</td>
+        </tr>
+        <tr>
+            <th scope="row">MaltaShip</th>
+            <td>@MaltaShipCostValue</td>
+        </tr>
+        </tbody>
+    </table>
 </div>
