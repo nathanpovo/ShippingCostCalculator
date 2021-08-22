@@ -41,11 +41,11 @@ namespace ShippingCostCalculator.Domain
         }
 
         /// <inheritdoc cref="IPackageDetailsValidator.IsVolumeValid"/>
-        public bool IsVolumeValid(PackageDimensions packageDimensions)
+        public ValidationResult IsVolumeValid(PackageDimensions packageDimensions)
             => PackageDetailsValidator.IsVolumeValid(packageDimensions);
 
         /// <inheritdoc cref="IPackageDetailsValidator.IsWeightValid"/>
-        public bool IsWeightValid(float weight)
+        public ValidationResult IsWeightValid(float weight)
             => PackageDetailsValidator.IsWeightValid(weight);
     }
 }

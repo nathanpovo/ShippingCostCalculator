@@ -118,17 +118,21 @@ namespace ShippingCostCalculator.Domain.Tests
             Mock<ICostCalculator> costCalculatorMock = new();
             Mock<IPackageDetailsValidator> packageDetailsValidatorMock = new();
 
+            ValidationResult validation = validationResult
+                ? ValidationResult.Success
+                : ValidationResult.Failed(new ValidationError(ValidationErrorType.ValueIsTooLowOrTooHigh));
+
             packageDetailsValidatorMock
                 .Setup(x => x.IsWeightValid(It.IsAny<float>()))
-                .Returns(validationResult);
+                .Returns(validation);
 
             Courier courier = Courier.Create(costCalculatorMock.Object, packageDetailsValidatorMock.Object);
 
             float weight = fixture.Create<float>();
 
-            bool isWeightValid = courier.IsWeightValid(weight);
+            ValidationResult isWeightValid = courier.IsWeightValid(weight);
 
-            isWeightValid.Should().Be(validationResult);
+            isWeightValid.IsValid.Should().Be(validationResult);
         }
 
         [Theory]
@@ -141,17 +145,21 @@ namespace ShippingCostCalculator.Domain.Tests
             Mock<ICostCalculator> costCalculatorMock = new();
             Mock<IPackageDetailsValidator> packageDetailsValidatorMock = new();
 
+            ValidationResult validation = validationResult
+                ? ValidationResult.Success
+                : ValidationResult.Failed(new ValidationError(ValidationErrorType.ValueIsTooLowOrTooHigh));
+
             packageDetailsValidatorMock
                 .Setup(x => x.IsVolumeValid(It.IsAny<PackageDimensions>()))
-                .Returns(validationResult);
+                .Returns(validation);
 
             Courier courier = Courier.Create(costCalculatorMock.Object, packageDetailsValidatorMock.Object);
 
             PackageDimensions packageDimensions = fixture.Create<PackageDimensions>();
 
-            bool isVolumeValid = courier.IsVolumeValid(packageDimensions);
+            ValidationResult isVolumeValid = courier.IsVolumeValid(packageDimensions);
 
-            isVolumeValid.Should().Be(validationResult);
+            isVolumeValid.IsValid.Should().Be(validationResult);
         }
 
         public static IEnumerable<object[]> CostData =>

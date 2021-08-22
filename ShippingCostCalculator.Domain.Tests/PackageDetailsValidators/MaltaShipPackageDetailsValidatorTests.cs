@@ -16,9 +16,20 @@ namespace ShippingCostCalculator.Domain.Tests.PackageDetailsValidators
         {
             MaltaShipPackageDetailsValidator validator = new();
 
-            bool isWeightValid = validator.IsWeightValid(weight);
+            ValidationResult isWeightValid = validator.IsWeightValid(weight);
 
-            isWeightValid.Should().BeFalse("weight value is too low for this courier");
+            isWeightValid.IsValid.Should().BeFalse("weight value is too low for this courier");
+            isWeightValid.Errors
+                .Should()
+                .Contain(error => error.ErrorType == ValidationErrorType.ValueIsTooLow)
+                .Which
+                .ValidationLimits
+                .Should()
+                .BeOfType<ValidationLimits>()
+                .Which
+                .LowerLimit
+                .Should()
+                .Be(10);
         }
 
         [Theory]
@@ -30,9 +41,10 @@ namespace ShippingCostCalculator.Domain.Tests.PackageDetailsValidators
         {
             MaltaShipPackageDetailsValidator validator = new();
 
-            bool isWeightValid = validator.IsWeightValid(weight);
+            ValidationResult isWeightValid = validator.IsWeightValid(weight);
 
-            isWeightValid.Should().BeTrue("weight value is within the limit for this courier");
+            isWeightValid.IsValid.Should().BeTrue("weight value is within the limits for this courier");
+            isWeightValid.Errors.Should().BeNullOrEmpty();
         }
 
         [Theory]
@@ -46,9 +58,20 @@ namespace ShippingCostCalculator.Domain.Tests.PackageDetailsValidators
             MaltaShipPackageDetailsValidator validator = new();
 
             PackageDimensions packageDimensions = new(volume);
-            bool isVolumeValid = validator.IsVolumeValid(packageDimensions);
+            ValidationResult isVolumeValid = validator.IsVolumeValid(packageDimensions);
 
-            isVolumeValid.Should().BeFalse("volume value is too low for this courier");
+            isVolumeValid.IsValid.Should().BeFalse("volume value is too low for this courier");
+            isVolumeValid.Errors
+                .Should()
+                .Contain(error => error.ErrorType == ValidationErrorType.ValueIsTooLow)
+                .Which
+                .ValidationLimits
+                .Should()
+                .BeOfType<ValidationLimits>()
+                .Which
+                .LowerLimit
+                .Should()
+                .Be(500);
         }
 
         [Theory]
@@ -61,9 +84,10 @@ namespace ShippingCostCalculator.Domain.Tests.PackageDetailsValidators
             MaltaShipPackageDetailsValidator validator = new();
 
             PackageDimensions packageDimensions = new(volume);
-            bool isVolumeValid = validator.IsVolumeValid(packageDimensions);
+            ValidationResult isVolumeValid = validator.IsVolumeValid(packageDimensions);
 
-            isVolumeValid.Should().BeTrue("volume value is within the limit for this courier");
+            isVolumeValid.IsValid.Should().BeTrue("volume value is within the limit for this courier");
+            isVolumeValid.Errors.Should().BeNullOrEmpty();
         }
     }
 }

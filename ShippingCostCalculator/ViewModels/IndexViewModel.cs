@@ -27,13 +27,16 @@ namespace ShippingCostCalculator.ViewModels
         private void SetupCostProperty(Courier courier, Expression<Func<IndexViewModel, float?>> property)
         {
             IObservable<bool> volumeIsValid = this.WhenAnyValue(x => x.PackageDimensions)
-                .Select(packageDimensions => packageDimensions is not null && courier.IsVolumeValid(packageDimensions))
+                .WhereNotNull()
+                .Select(courier.IsVolumeValid)
+                .Select(result => result.IsValid)
                 .StartWith(false)
                 .Publish()
                 .RefCount();
 
             IObservable<bool> weightIsValid = this.WhenAnyValue(x => x.Weight)
                 .Select(courier.IsWeightValid)
+                .Select(result => result.IsValid)
                 .StartWith(false)
                 .Publish()
                 .RefCount();
