@@ -1,6 +1,57 @@
 @page "/"
 @inherits ReactiveComponentBase<ViewModels.IndexViewModel>
 
-<h1>Hello, world!</h1>
-
-Welcome to your new app.
+<div class="container">
+    <form class="g-3">
+        <div class="mb-3">
+            <label for="inputWeight" class="form-label">Weight</label>
+            <div class="input-group">
+                <input type="number" class="form-control" id="inputWeight"
+                       min="0" step="0.1"
+                       @bind-value="ViewModel!.Weight"
+                       @bind-value:event="oninput">
+                <span class="input-group-text">kg</span>
+            </div>
+        </div>
+        <div class="row mb-3">
+            <div class="col-sm">
+                <label for="inputLength" class="form-label">Length</label>
+                <div class="input-group">
+                    <input type="number" class="form-control" id="inputLength"
+                           min="0" step="1"
+                           @bind-value="ViewModel!.Length"
+                           @bind-value:event="oninput">
+                    <span class="input-group-text">cm</span>
+                </div>
+            </div>
+            <div class="col-sm">
+                <label for="inputWidth" class="form-label">Width</label>
+                <div class="input-group">
+                    <input type="number" class="form-control" id="inputWidth"
+                           min="0" step="1"
+                           @bind-value="ViewModel!.Width"
+                           @bind-value:event="oninput">
+                    <span class="input-group-text">cm</span>
+                </div>
+            </div>
+            <div class="col-sm">
+                <label for="inputHeight" class="form-label">Height</label>
+                <div class="input-group">
+                    <input type="number" class="form-control" id="inputHeight"
+                           min="0" step="1"
+                           @bind-value="ViewModel!.Height"
+                           @bind-value:event="oninput">
+                    <span class="input-group-text">cm</span>
+                </div>
+            </div>
+        </div>
+        <div class="row mb-3">
+            <div class="col-sm">
+                <p>Volume: @(ViewModel?.PackageDimensions?.Volume ?? 0) cm<sup>3</sup></p>
+            </div>
+        </div>
+        <div class="col-12">
+            <button type="submit" class="btn btn-primary">Calculate cost</button>
+        </div>
+    </form>
+</div>
