@@ -1,10 +1,14 @@
+using System;
+
 namespace ShippingCostCalculator.Data
 {
     public class ShippingData
     {
-        public ShippingData(int courierId, float weight, float length, float width, float height, float shippingCost)
+        public ShippingData(int courierId, DateTimeOffset timeStamp, float weight, float length, float width,
+            float height, float shippingCost)
         {
             CourierId = courierId;
+            TimeStamp = timeStamp;
             Weight = weight;
             Length = length;
             Width = width;
@@ -13,6 +17,7 @@ namespace ShippingCostCalculator.Data
         }
 
         public long Id { get; set; }
+        public DateTimeOffset TimeStamp { get; set; }
         public int CourierId { get; set; }
         public Courier? Courier { get; set; }
         public float Weight { get; set; }
