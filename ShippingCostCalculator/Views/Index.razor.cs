@@ -1,3 +1,4 @@
+using System.Reactive.Linq;
 using System.Threading.Tasks;
 using Microsoft.AspNetCore.Components;
 using ShippingCostCalculator.Models;
@@ -19,7 +20,7 @@ namespace ShippingCostCalculator.Views
         private void CalculateCost()
             => CalculatedCost = true;
 
-        private Task PostPackageAsync(CourierModel courierModel)
-            => Task.CompletedTask;
+        private async Task PostPackageAsync(CourierModel courierModel)
+            => await ViewModel!.PostPackage.Execute(courierModel);
     }
 }
