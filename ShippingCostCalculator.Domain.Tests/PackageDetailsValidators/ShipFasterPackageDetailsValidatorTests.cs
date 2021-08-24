@@ -19,15 +19,13 @@ namespace ShippingCostCalculator.Domain.Tests.PackageDetailsValidators
             ValidationResult isWeightValid = validator.IsWeightValid(weight);
 
             isWeightValid.IsValid.Should().BeFalse("weight value is too low for this courier");
-            isWeightValid.Errors
+            isWeightValid.ValidationError
                 .Should()
-                .Contain(error => error.ErrorType == ValidationErrorType.ValueIsTooLow)
-                .Which
-                .ValidationLimits
+                .NotBeNull();
+            isWeightValid.ValidationError!.ErrorType
                 .Should()
-                .BeOfType<ValidationLimits>()
-                .Which
-                .LowerLimit
+                .Be(ValidationErrorType.ValueIsTooLow);
+            isWeightValid.ValidationError!.ValidationLimits?.LowerLimit
                 .Should()
                 .Be(10);
         }
@@ -43,15 +41,13 @@ namespace ShippingCostCalculator.Domain.Tests.PackageDetailsValidators
             ValidationResult isWeightValid = validator.IsWeightValid(weight);
 
             isWeightValid.IsValid.Should().BeFalse("weight value is too high for this courier");
-            isWeightValid.Errors
+            isWeightValid.ValidationError
                 .Should()
-                .Contain(error => error.ErrorType == ValidationErrorType.ValueIsTooHigh)
-                .Which
-                .ValidationLimits
+                .NotBeNull();
+            isWeightValid.ValidationError!.ErrorType
                 .Should()
-                .BeOfType<ValidationLimits>()
-                .Which
-                .UpperLimit
+                .Be(ValidationErrorType.ValueIsTooHigh);
+            isWeightValid.ValidationError!.ValidationLimits?.UpperLimit
                 .Should()
                 .Be(30);
         }
@@ -68,7 +64,7 @@ namespace ShippingCostCalculator.Domain.Tests.PackageDetailsValidators
             ValidationResult isWeightValid = validator.IsWeightValid(weight);
 
             isWeightValid.IsValid.Should().BeTrue("weight value is within the limit for this courier");
-            isWeightValid.Errors.Should().BeNullOrEmpty();
+            isWeightValid.ValidationError.Should().BeNull();
         }
 
         [Theory]
@@ -83,15 +79,13 @@ namespace ShippingCostCalculator.Domain.Tests.PackageDetailsValidators
             ValidationResult isVolumeValid = validator.IsVolumeValid(packageDimensions);
 
             isVolumeValid.IsValid.Should().BeFalse("volume value is too low for this courier");
-            isVolumeValid.Errors
+            isVolumeValid.ValidationError
                 .Should()
-                .Contain(error => error.ErrorType == ValidationErrorType.ValueIsTooLow)
-                .Which
-                .ValidationLimits
+                .NotBeNull();
+            isVolumeValid.ValidationError!.ErrorType
                 .Should()
-                .BeOfType<ValidationLimits>()
-                .Which
-                .LowerLimit
+                .Be(ValidationErrorType.ValueIsTooLow);
+            isVolumeValid.ValidationError!.ValidationLimits?.LowerLimit
                 .Should()
                 .Be(0);
         }
@@ -109,15 +103,13 @@ namespace ShippingCostCalculator.Domain.Tests.PackageDetailsValidators
             ValidationResult isVolumeValid = validator.IsVolumeValid(packageDimensions);
 
             isVolumeValid.IsValid.Should().BeFalse("volume value is too high for this courier");
-            isVolumeValid.Errors
+            isVolumeValid.ValidationError
                 .Should()
-                .Contain(error => error.ErrorType == ValidationErrorType.ValueIsTooHigh)
-                .Which
-                .ValidationLimits
+                .NotBeNull();
+            isVolumeValid.ValidationError!.ErrorType
                 .Should()
-                .BeOfType<ValidationLimits>()
-                .Which
-                .UpperLimit
+                .Be(ValidationErrorType.ValueIsTooHigh);
+            isVolumeValid.ValidationError!.ValidationLimits?.UpperLimit
                 .Should()
                 .Be(1700);
         }
@@ -135,7 +127,7 @@ namespace ShippingCostCalculator.Domain.Tests.PackageDetailsValidators
             ValidationResult isVolumeValid = validator.IsVolumeValid(packageDimensions);
 
             isVolumeValid.IsValid.Should().BeTrue("volume value is within the limit for this courier");
-            isVolumeValid.Errors.Should().BeNullOrEmpty();
+            isVolumeValid.ValidationError.Should().BeNull();
         }
     }
 }
