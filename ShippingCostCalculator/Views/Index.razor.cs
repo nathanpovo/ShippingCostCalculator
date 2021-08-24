@@ -1,3 +1,5 @@
+using System.Threading.Tasks;
+using ShippingCostCalculator.Models;
 using ShippingCostCalculator.ViewModels;
 
 namespace ShippingCostCalculator.Views
@@ -14,10 +16,7 @@ namespace ShippingCostCalculator.Views
         private void CalculateCost()
             => CalculatedCost = true;
 
-        private void PostWithCargo4You() { }
-
-        private void PostWithShipFaster() { }
-
-        private void PostWithMaltaShip() { }
+        private Task PostPackageAsync(CourierModel courierModel)
+            => Task.CompletedTask;
     }
 }

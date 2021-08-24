@@ -1,4 +1,5 @@
 @page "/"
+@using ShippingCostCalculator.Models
 @inherits ReactiveComponentBase<ViewModels.IndexViewModel>
 
 <div class="container">
@@ -69,54 +70,23 @@
                 </tr>
                 </thead>
                 <tbody>
-                <tr>
-                    <th scope="row" class="col-3">Cargo4You</th>
-                    @{
-                        if (ViewModel?.Cargo4YouCost is not null)
+                @foreach (CourierModel courierModel in ViewModel!.Couriers)
+                {
+                    <tr>
+                        <th scope="row" class="col-3">@courierModel.CourierType.ToString()</th>
+                        @if (courierModel.CostAsString is not null)
                         {
-                            <td>@ViewModel?.Cargo4YouCost</td>
+                            <td>@courierModel.CostAsString</td>
                             <td class="col-5 col-sm-4">
-                                <button class="btn btn-primary" @onclick="PostWithCargo4You">Send Package</button>
+                                <button class="btn btn-primary" @onclick="@(() => PostPackageAsync(courierModel))">Send Package</button>
                             </td>
                         }
                         else
                         {
-                            <td colspan="2">@ViewModel?.Cargo4YouValidation</td>
+                            <td colspan="2">@courierModel.ValidationMessage</td>
                         }
-                    }
-                </tr>
-                <tr>
-                    <th scope="row" class="col-3">ShipFaster</th>
-                    @{
-                        if (ViewModel?.ShipFasterCost is not null)
-                        {
-                            <td>@ViewModel?.ShipFasterCost</td>
-                            <td class="col-5 col-sm-4">
-                                <button class="btn btn-primary" @onclick="PostWithShipFaster">Send Package</button>
-                            </td>
-                        }
-                        else
-                        {
-                            <td colspan="2">@ViewModel?.ShipFasterValidation</td>
-                        }
-                    }
-                </tr>
-                <tr>
-                    <th scope="row" class="col-3">MaltaShip</th>
-                    @{
-                        if (ViewModel?.MaltaShipCost is not null)
-                        {
-                            <td>@ViewModel?.MaltaShipCost</td>
-                            <td class="col-5 col-sm-4">
-                                <button class="btn btn-primary" @onclick="PostWithMaltaShip">Send Package</button>
-                            </td>
-                        }
-                        else
-                        {
-                            <td colspan="2">@ViewModel?.MaltaShipValidation</td>
-                        }
-                    }
-                </tr>
+                    </tr>
+                }
                 </tbody>
             </table>
         }

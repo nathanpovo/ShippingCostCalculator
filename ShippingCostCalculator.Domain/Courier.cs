@@ -13,7 +13,7 @@ namespace ShippingCostCalculator.Domain
 
         private readonly ReplaySubject<ValidationResult> volumeValidationSubject = new(1);
         private readonly ReplaySubject<ValidationResult> weightValidationSubject = new(1);
-        private readonly ReplaySubject<float?> packageCostSubject = new(1);
+        private readonly ReplaySubject<long?> packageCostSubject = new(1);
 
         private Courier(ICostCalculator costCalculator, IPackageDetailsValidator packageDetailsValidator)
         {
@@ -51,10 +51,6 @@ namespace ShippingCostCalculator.Domain
                         ? CalculateCost(packageDimensions, weight)
                         : (long?) null;
                 })
-                .Select(cost
-                    => cost is not null
-                        ? (float) cost / 1000f
-                        : (float?) null)
                 .Subscribe(packageCostSubject);
 
         public long CalculateCost(PackageDimensions packageDimensions, float weight)
@@ -67,7 +63,7 @@ namespace ShippingCostCalculator.Domain
                 : costBasedOnWeight;
         }
 
-        public IObservable<float?> PackageCost => packageCostSubject.AsObservable();
+        public IObservable<long?> PackageCost => packageCostSubject.AsObservable();
         public IObservable<ValidationResult> VolumeValidation => volumeValidationSubject.AsObservable();
         public IObservable<ValidationResult> WeightValidation => weightValidationSubject.AsObservable();
 
