@@ -1,8 +1,10 @@
 using System;
 using System.Linq;
 using System.Reactive.Linq;
+using Microsoft.EntityFrameworkCore;
 using ReactiveUI;
 using ReactiveUI.Fody.Helpers;
+using ShippingCostCalculator.Data;
 using ShippingCostCalculator.Domain;
 using ShippingCostCalculator.Models;
 
@@ -10,10 +12,13 @@ namespace ShippingCostCalculator.ViewModels
 {
     public class IndexViewModel : ReactiveObject
     {
+        private readonly IDbContextFactory<ShippingContext> contextFactory;
         public readonly CourierModel[] Couriers;
 
-        public IndexViewModel()
+        public IndexViewModel(IDbContextFactory<ShippingContext> contextFactory)
         {
+            this.contextFactory = contextFactory;
+
             this.WhenAnyValue(x => x.Length, x => x.Width, x => x.Height,
                     (length, width, height) => new PackageDimensions(length, width, height))
                 .ToPropertyEx(this, x => x.PackageDimensions);

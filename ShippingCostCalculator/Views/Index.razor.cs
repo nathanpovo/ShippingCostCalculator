@@ -1,4 +1,5 @@
 using System.Threading.Tasks;
+using Microsoft.AspNetCore.Components;
 using ShippingCostCalculator.Models;
 using ShippingCostCalculator.ViewModels;
 
@@ -6,9 +7,11 @@ namespace ShippingCostCalculator.Views
 {
     public partial class Index
     {
-        public Index()
+        [Inject]
+        public IndexViewModel? IndexViewModel
         {
-            ViewModel ??= new IndexViewModel();
+            get => ViewModel;
+            set => ViewModel = value;
         }
 
         private bool CalculatedCost { get; set; }

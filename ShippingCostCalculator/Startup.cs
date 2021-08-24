@@ -5,6 +5,7 @@ using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
 using ShippingCostCalculator.Data;
+using ShippingCostCalculator.ViewModels;
 
 namespace ShippingCostCalculator
 {
@@ -24,6 +25,8 @@ namespace ShippingCostCalculator
 
             string connectionString = Configuration.GetConnectionString("ShippingCostCalculatorDatabase");
             services.AddDbContextFactory<ShippingContext>(opt => opt.UseSqlite(connectionString));
+
+            services.AddTransient<IndexViewModel>();
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
