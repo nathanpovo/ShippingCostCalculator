@@ -4,6 +4,7 @@
     <TargetFramework>net5.0</TargetFramework>
     <Nullable>enable</Nullable>
     <WarningsAsErrors>nullable</WarningsAsErrors>
+    <UserSecretsId>b3ac3c8f-aba2-4948-a161-4e8055222d6f</UserSecretsId>
   </PropertyGroup>
 
   <ItemGroup>
