@@ -13,5 +13,11 @@ namespace ShippingCostCalculator.Views
 
         private void CalculateCost()
             => CalculatedCost = true;
+
+        private void PostWithCargo4You() { }
+
+        private void PostWithShipFaster() { }
+
+        private void PostWithMaltaShip() { }
     }
 }

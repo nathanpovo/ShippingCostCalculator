@@ -65,46 +65,55 @@
                 <thead>
                 <tr>
                     <th scope="col">Courier</th>
-                    <th scope="col">Shipping Cost</th>
+                    <th scope="col" colspan="2">Shipping Cost</th>
                 </tr>
                 </thead>
                 <tbody>
                 <tr>
-                    <th scope="row">Cargo4You</th>
+                    <th scope="row" class="col-3">Cargo4You</th>
                     @{
                         if (ViewModel?.Cargo4YouCost is not null)
                         {
                             <td>@ViewModel?.Cargo4YouCost</td>
+                            <td class="col-5 col-sm-4">
+                                <button class="btn btn-primary" @onclick="PostWithCargo4You">Send Package</button>
+                            </td>
                         }
                         else
                         {
-                            <td>@ViewModel?.Cargo4YouValidation</td>
+                            <td colspan="2">@ViewModel?.Cargo4YouValidation</td>
                         }
                     }
                 </tr>
                 <tr>
-                    <th scope="row">ShipFaster</th>
+                    <th scope="row" class="col-3">ShipFaster</th>
                     @{
                         if (ViewModel?.ShipFasterCost is not null)
                         {
                             <td>@ViewModel?.ShipFasterCost</td>
+                            <td class="col-5 col-sm-4">
+                                <button class="btn btn-primary" @onclick="PostWithShipFaster">Send Package</button>
+                            </td>
                         }
                         else
                         {
-                            <td>@ViewModel?.ShipFasterValidation</td>
+                            <td colspan="2">@ViewModel?.ShipFasterValidation</td>
                         }
                     }
                 </tr>
                 <tr>
-                    <th scope="row">MaltaShip</th>
+                    <th scope="row" class="col-3">MaltaShip</th>
                     @{
                         if (ViewModel?.MaltaShipCost is not null)
                         {
                             <td>@ViewModel?.MaltaShipCost</td>
+                            <td class="col-5 col-sm-4">
+                                <button class="btn btn-primary" @onclick="PostWithMaltaShip">Send Package</button>
+                            </td>
                         }
                         else
                         {
-                            <td>@ViewModel?.MaltaShipValidation</td>
+                            <td colspan="2">@ViewModel?.MaltaShipValidation</td>
                         }
                     }
                 </tr>
