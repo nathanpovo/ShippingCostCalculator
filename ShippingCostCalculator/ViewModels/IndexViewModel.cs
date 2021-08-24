@@ -9,9 +9,9 @@ namespace ShippingCostCalculator.ViewModels
 {
     public class IndexViewModel : ReactiveObject
     {
-        private readonly Courier cargo4You = Courier.Create(CourierType.Cargo4You);
-        private readonly Courier shipFaster = Courier.Create(CourierType.ShipFaster);
-        private readonly Courier maltaShip = Courier.Create(CourierType.MaltaShip);
+        private readonly Courier cargo4You;
+        private readonly Courier shipFaster;
+        private readonly Courier maltaShip;
 
         public IndexViewModel()
         {
@@ -19,37 +19,34 @@ namespace ShippingCostCalculator.ViewModels
                     (length, width, height) => new PackageDimensions(length, width, height))
                 .ToPropertyEx(this, x => x.PackageDimensions);
 
+            IObservable<PackageDimensions> packageDimensionsObservable = this.WhenAnyValue(x => x.PackageDimensions)
+                .WhereNotNull()
+                .Publish()
+                .RefCount();
+
+            IObservable<float> weightObservable = this.WhenAnyValue(x => x.Weight)
+                .Publish()
+                .RefCount();
+
+            cargo4You = CreateCourier(CourierType.Cargo4You, packageDimensionsObservable, weightObservable);
+            shipFaster = CreateCourier(CourierType.ShipFaster, packageDimensionsObservable, weightObservable);
+            maltaShip = CreateCourier(CourierType.MaltaShip, packageDimensionsObservable, weightObservable);
+
             SetupCostProperty(cargo4You, x => x.Cargo4YouCost);
             SetupCostProperty(shipFaster, x => x.ShipFasterCost);
             SetupCostProperty(maltaShip, x => x.MaltaShipCost);
         }
 
         private void SetupCostProperty(Courier courier, Expression<Func<IndexViewModel, float?>> property)
+            => courier.PackageCost.ToPropertyEx(this, property);
+
+        private static Courier CreateCourier(CourierType courierType,
+            IObservable<PackageDimensions> packageDimensionsObservable, IObservable<float> weightObservable)
         {
-            IObservable<bool> volumeIsValid = this.WhenAnyValue(x => x.PackageDimensions)
-                .WhereNotNull()
-                .Select(courier.IsVolumeValid)
-                .Select(result => result.IsValid)
-                .StartWith(false)
-                .Publish()
-                .RefCount();
+            Courier courier = Courier.Create(courierType);
+            courier.InitializeObservables(packageDimensionsObservable, weightObservable);
 
-            IObservable<bool> weightIsValid = this.WhenAnyValue(x => x.Weight)
-                .Select(courier.IsWeightValid)
-                .Select(result => result.IsValid)
-                .StartWith(false)
-                .Publish()
-                .RefCount();
-
-            volumeIsValid
-                .CombineLatest(weightIsValid, (volumeValid, weightValid) => volumeValid && weightValid)
-                .Select<bool, long?>(isValid => isValid
-                    ? courier.CalculateCost(PackageDimensions!, Weight)
-                    : null)
-                .Select<long?, float?>(cost => cost is not null
-                    ? (float) cost / 1000f
-                    : null)
-                .ToPropertyEx(this, property);
+            return courier;
         }
 
         [Reactive]
