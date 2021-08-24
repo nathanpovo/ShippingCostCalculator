@@ -39,7 +39,7 @@ namespace ShippingCostCalculator.ViewModels
 
         private void SetupCostProperty(Courier courier, Expression<Func<IndexViewModel, string?>> property)
             => courier.PackageCost
-                    .Select(cost => $"€{cost?.ToString("F3")}")
+                    .Select(cost => cost is not null ? $"€{cost.Value:F3}" : null)
                     .ToPropertyEx(this, property);
 
         private static Courier CreateCourier(CourierType courierType,
