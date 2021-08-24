@@ -71,15 +71,42 @@
                 <tbody>
                 <tr>
                     <th scope="row">Cargo4You</th>
-                    <td>@ViewModel?.Cargo4YouCost</td>
+                    @{
+                        if (ViewModel?.Cargo4YouCost is not null)
+                        {
+                            <td>@ViewModel?.Cargo4YouCost</td>
+                        }
+                        else
+                        {
+                            <td>@ViewModel?.Cargo4YouValidation</td>
+                        }
+                    }
                 </tr>
                 <tr>
                     <th scope="row">ShipFaster</th>
-                    <td>@ViewModel?.ShipFasterCost</td>
+                    @{
+                        if (ViewModel?.ShipFasterCost is not null)
+                        {
+                            <td>@ViewModel?.ShipFasterCost</td>
+                        }
+                        else
+                        {
+                            <td>@ViewModel?.ShipFasterValidation</td>
+                        }
+                    }
                 </tr>
                 <tr>
                     <th scope="row">MaltaShip</th>
-                    <td>@ViewModel?.MaltaShipCost</td>
+                    @{
+                        if (ViewModel?.MaltaShipCost is not null)
+                        {
+                            <td>@ViewModel?.MaltaShipCost</td>
+                        }
+                        else
+                        {
+                            <td>@ViewModel?.MaltaShipValidation</td>
+                        }
+                    }
                 </tr>
                 </tbody>
             </table>
