@@ -37,8 +37,10 @@ namespace ShippingCostCalculator.ViewModels
             SetupCostProperty(maltaShip, x => x.MaltaShipCost);
         }
 
-        private void SetupCostProperty(Courier courier, Expression<Func<IndexViewModel, float?>> property)
-            => courier.PackageCost.ToPropertyEx(this, property);
+        private void SetupCostProperty(Courier courier, Expression<Func<IndexViewModel, string?>> property)
+            => courier.PackageCost
+                    .Select(cost => $"€{cost?.ToString("F3")}")
+                    .ToPropertyEx(this, property);
 
         private static Courier CreateCourier(CourierType courierType,
             IObservable<PackageDimensions> packageDimensionsObservable, IObservable<float> weightObservable)
@@ -65,12 +67,12 @@ namespace ShippingCostCalculator.ViewModels
         public PackageDimensions? PackageDimensions { get; }
 
         [ObservableAsProperty]
-        public float? Cargo4YouCost { get; }
+        public string? Cargo4YouCost { get; }
 
         [ObservableAsProperty]
-        public float? ShipFasterCost { get; }
+        public string? ShipFasterCost { get; }
 
         [ObservableAsProperty]
-        public float? MaltaShipCost { get; }
+        public string? MaltaShipCost { get; }
     }
 }
