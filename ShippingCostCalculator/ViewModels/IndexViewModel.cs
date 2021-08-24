@@ -21,11 +21,11 @@ namespace ShippingCostCalculator.ViewModels
 
             IObservable<PackageDimensions> packageDimensionsObservable = this.WhenAnyValue(x => x.PackageDimensions)
                 .WhereNotNull()
-                .Publish()
+                .Replay(1)
                 .RefCount();
 
             IObservable<float> weightObservable = this.WhenAnyValue(x => x.Weight)
-                .Publish()
+                .Replay(1)
                 .RefCount();
 
             cargo4You = CreateCourier(CourierType.Cargo4You, packageDimensionsObservable, weightObservable);
