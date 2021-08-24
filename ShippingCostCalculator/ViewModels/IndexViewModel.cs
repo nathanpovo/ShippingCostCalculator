@@ -10,10 +10,6 @@ namespace ShippingCostCalculator.ViewModels
 {
     public class IndexViewModel : ReactiveObject
     {
-        private readonly Courier cargo4You;
-        private readonly Courier shipFaster;
-        private readonly Courier maltaShip;
-
         public IndexViewModel()
         {
             this.WhenAnyValue(x => x.Length, x => x.Width, x => x.Height,
@@ -29,9 +25,9 @@ namespace ShippingCostCalculator.ViewModels
                 .Replay(1)
                 .RefCount();
 
-            cargo4You = CreateCourier(CourierType.Cargo4You, packageDimensionsObservable, weightObservable);
-            shipFaster = CreateCourier(CourierType.ShipFaster, packageDimensionsObservable, weightObservable);
-            maltaShip = CreateCourier(CourierType.MaltaShip, packageDimensionsObservable, weightObservable);
+            Courier cargo4You = CreateCourier(CourierType.Cargo4You, packageDimensionsObservable, weightObservable);
+            Courier shipFaster = CreateCourier(CourierType.ShipFaster, packageDimensionsObservable, weightObservable);
+            Courier maltaShip = CreateCourier(CourierType.MaltaShip, packageDimensionsObservable, weightObservable);
 
             SetupCostProperty(cargo4You, x => x.Cargo4YouCost);
             SetupCostProperty(shipFaster, x => x.ShipFasterCost);
