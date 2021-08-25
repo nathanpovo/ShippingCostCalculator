@@ -40,8 +40,9 @@ namespace ShippingCostCalculator.Domain.Tests
 
         [Theory]
         [InlineData(-123)]
-        [InlineData(0)]
+        [InlineData(-1)]
         [InlineData(1000)]
+        [InlineData(1233)]
         public void WhenCreatingUndefinedCourier_ShouldThrow(int value)
         {
             CourierType courierType = (CourierType) value;
