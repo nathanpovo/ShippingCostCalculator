@@ -50,3 +50,12 @@ dotnet run --project .\ShippingCostCalculator\ShippingCostCalculator.csproj
 ```
 
 Then go to the url https://localhost:5001/ with a browser.
+
+## Possible improvements and additions
+
+- Test UI
+- Test observables in the domain project
+- Improve aesthetics of the UI
+- Add option to change the unit of weight
+- Add option to change the unit of package dimensions
+- Add option to change the currency (use the [exchangerate.host](https://exchangerate.host/) API to get the currency conversion rates)
